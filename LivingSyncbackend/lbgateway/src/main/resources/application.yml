@@ -1,0 +1,74 @@
+spring:
+
+  application:
+
+    name: LBGateway
+
+  cloud:
+
+    gateway:
+
+      mvc:
+
+        routes:
+
+          - id: payment-route
+
+            uri: lb://PAYMENT
+
+            predicates:
+
+              - Path=/payments/**
+
+          - id: user-route
+
+            uri: lb://USER
+
+            predicates:
+
+              - Path=/users/**
+
+          - id: anouncements-route
+
+            uri: lb://ANOUNCEMENTS
+
+            predicates:
+
+              - Path=/api/groups/**
+
+          - id: pakingslot-route
+
+            uri: lb://PAKINGSLOT
+
+            predicates:
+
+              - Path=/parking-slots/**
+
+          - id: event-route
+
+            uri: lb://EVENTS
+
+            predicates:
+
+              - Path=/events/**
+
+
+
+server:
+  port: 7777
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      enabled: true
+
+#eureka:
+#  client:
+#    service-url:
+#      default-zone: http://localhost:8761/eureka
